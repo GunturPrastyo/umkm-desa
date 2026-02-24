@@ -23,7 +23,7 @@
                     <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100">{{ $umkm->nama_produk }}</h3>
 
                     <!-- Pemilik -->
-                    <div class="flex items-center text-sm text-gray-600 dark:text-gray-400 mt-1">
+                    <div class="flex items-center text-sm text-gray-600 dark:text-gray-400 mt-2 mb-2">
                         <i class="fas fa-user text-yellow-500 mr-2"></i>
                         <span>{{ $umkm->nama_pemilik }}</span>
                     </div>

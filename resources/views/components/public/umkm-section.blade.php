@@ -5,6 +5,8 @@
         kategori: 'semua',
         search: '',
         showDetailModal: false,
+        showImageModal: false,
+        activeImage: null,
         selectedUmkm: null
     }">
 
@@ -122,7 +124,7 @@
         <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" @click="showDetailModal=false"></div>
 
         <div
-            class="relative bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-5xl w-full max-h-[90vh] overflow-y-auto transform transition-all"
+            class="relative bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto transform transition-all"
             x-data="{ currentImg: 0 }">
             
             <!-- Tombol Close -->
@@ -131,22 +133,30 @@
                 <i class="fas fa-times text-lg"></i>
             </button>
 
-            <div class="flex flex-col md:flex-row h-full">
+            <div class="p-6 md:p-8">
                 
-                <!-- Kolom Kiri: Galeri Foto -->
-                <div class="w-full md:w-1/2 bg-gray-100 dark:bg-gray-900 p-6 flex flex-col justify-center">
+                <!-- Kategori -->
+                <div class="mb-4">
+                    <span class="inline-block px-3 py-1 rounded-full bg-yellow-100 dark:bg-yellow-900 text-yellow-700 dark:text-yellow-300 text-xs font-bold uppercase tracking-wider"
+                          x-text="selectedUmkm ? selectedUmkm.kategori : ''"></span>
+                </div>
+
+                <!-- Galeri Foto (Dipindah ke sini) -->
+                <div class="mb-6 bg-gray-50 dark:bg-gray-900 rounded-xl p-2 border border-gray-100 dark:border-gray-700">
                     <!-- Main Image -->
-                    <div class="relative aspect-[4/3] rounded-xl overflow-hidden shadow-lg mb-4 bg-white dark:bg-gray-800">
+                    <div class="relative aspect-video rounded-lg overflow-hidden shadow-sm mb-2 bg-white dark:bg-gray-800">
                         <template x-if="selectedUmkm && selectedUmkm.photos && selectedUmkm.photos.length > 0">
                             <img :src="'/storage/' + selectedUmkm.photos[currentImg].photo"
-                                class="w-full h-full object-contain"
+                                class="w-full h-full object-contain cursor-pointer hover:opacity-90 transition-opacity"
+                                @click="activeImage = '/storage/' + selectedUmkm.photos[currentImg].photo; showImageModal = true"
                                 x-transition:enter="transition ease-out duration-300"
                                 x-transition:enter-start="opacity-0 scale-95"
                                 x-transition:enter-end="opacity-100 scale-100">
                         </template>
                         <template x-if="selectedUmkm && (!selectedUmkm.photos || selectedUmkm.photos.length === 0)">
                              <img :src="selectedUmkm && selectedUmkm.primary_photo ? '/storage/' + selectedUmkm.primary_photo : 'https://via.placeholder.com/400x300?text=No+Image'"
-                                class="w-full h-full object-cover">
+                                class="w-full h-full object-contain cursor-pointer hover:opacity-90 transition-opacity"
+                                @click="activeImage = selectedUmkm.primary_photo ? '/storage/' + selectedUmkm.primary_photo : 'https://via.placeholder.com/400x300?text=No+Image'; showImageModal = true">
                         </template>
                     </div>
 
@@ -163,18 +173,12 @@
                     </div>
                 </div>
 
-                <!-- Kolom Kanan: Informasi -->
-                <div class="w-full md:w-1/2 p-6 md:p-8 overflow-y-auto">
-                    
-                    <!-- Header Info -->
-                    <div class="mb-6">
-                        <span class="inline-block px-3 py-1 rounded-full bg-yellow-100 dark:bg-yellow-900 text-yellow-700 dark:text-yellow-300 text-xs font-bold uppercase tracking-wider mb-2"
-                              x-text="selectedUmkm ? selectedUmkm.kategori : ''"></span>
-                        
+                <!-- Header Info -->
+                <div class="mb-6">
                         <h2 class="text-3xl font-bold text-gray-800 dark:text-white mb-2"
                             x-text="selectedUmkm ? selectedUmkm.nama_produk : ''"></h2>
                         
-                        <div class="flex items-center text-gray-500 dark:text-gray-400">
+                        <div class="flex items-center text-gray-500 dark:text-gray-400 mb-4">
                             <div class="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center mr-3">
                                 <i class="fas fa-user text-sm"></i>
                             </div>
@@ -183,7 +187,6 @@
                                 <p class="font-medium text-sm" x-text="selectedUmkm ? selectedUmkm.nama_pemilik : ''"></p>
                             </div>
                         </div>
-                    </div>
 
                     <!-- Deskripsi -->
                     <div class="mb-8">
@@ -245,10 +248,22 @@
                         </div>
                     </div>
 
-                </div>
             </div>
-
         </div>
+    </div>
+
+    <!-- Modal Full Image -->
+    <div x-show="showImageModal" x-transition.opacity
+        class="fixed inset-0 z-[60] flex items-center justify-center bg-black/95 p-4" 
+        style="display: none;">
+        
+        <button @click="showImageModal=false"
+            class="absolute top-5 right-5 text-white/70 hover:text-white transition-colors z-50 bg-black/20 rounded-full w-10 h-10 flex items-center justify-center">
+            <i class="fas fa-times text-2xl"></i>
+        </button>
+
+        <img :src="activeImage" class="max-w-full max-h-full rounded-lg shadow-2xl object-contain" 
+             @click.outside="showImageModal=false">
     </div>
 </section>
 
