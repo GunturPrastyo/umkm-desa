@@ -5,8 +5,8 @@
 
         <!-- Logo -->
         <div class="flex items-center space-x-3 mb-6">
-            <img src="{{ asset('logo/Logo Kota Semarang.png') }}" class="h-10 w-auto" alt="Logo Kota Semarang">
-            <div class="font-semibold text-gray-800 dark:text-white leading-tight -ml-3 mb-2">
+            <img src="{{ asset('logo/Logo.png') }}" class="h-10 w-auto" alt="Logo Kota Semarang">
+            <div class="font-semibold text-gray-800 dark:text-white leading-tight mb-2">
                 <div class="text-base">Desa Tirtomulyo</div>
                 <div class="text-xs text-gray-500 dark:text-gray-300">Kec. Plantungan, Kab. Kendal</div>
             </div>
@@ -15,7 +15,7 @@
         <ul class="space-y-2 text-sm font-medium text-gray-700 dark:text-gray-200">
 
             <!-- Dashboard -->
-            <li>
+            {{-- <li>
                 <a href="{{ route('admin.dashboard.index') }}"
                     class="flex items-center p-2 rounded-lg group 
                     {{ request()->routeIs('admin.dashboard.*')
@@ -28,7 +28,7 @@
                     </svg>
                     <span class="ml-3">Dashboard</span>
                 </a>
-            </li>
+            </li> --}}
 
             <!-- UMKM -->
             <li>

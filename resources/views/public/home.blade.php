@@ -11,6 +11,11 @@
 
 
      @include('components.public.umkm-section')
+{{--      
+     <div class="h-px bg-gray-300 dark:bg-gray-600"></div>
+
+     
+     @include('components.public.galeri-section') --}}
      
      <div class="h-px bg-gray-300 dark:bg-gray-600"></div>
 

@@ -1,10 +1,9 @@
 <section id="umkm"
     class="bg-gradient-to-l from-gray-100 to-gray-200 
-           dark:from-gray-800 dark:to-gray-900 p-5 mx-auto   transition-colors duration-300"
+           dark:from-gray-800 dark:to-gray-900 py-16 px-4 mx-auto transition-colors duration-300"
     style="font-family: 'Poppins', sans-serif;" x-data="{
         kategori: 'semua',
         search: '',
-        showImageModal: false,
         showDetailModal: false,
         selectedUmkm: null
     }">
@@ -18,27 +17,29 @@
 
 
     <div
-        class=" bg-gradient-to-r from-gray-50 to-gray-200 
-               dark:from-gray-800 dark:to-gray-900
-            max-w-6xl mx-auto px-4 shadow-lg rounded-xl p-12">
+        class="max-w-7xl mx-auto">
 
         <!-- Kata Pembuka -->
-        <div class="text-center mb-6 sm:mb-10 dark:text-white px-4">
-            <h2 class="text-2xl sm:text-3xl md:text-3xl font-bold text-gray-800 dark:text-gray-100">UMKM Desa Tirtomulyo
+        <div class="text-center mb-12 dark:text-white px-4">
+            <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 dark:text-gray-100 mb-4">
+                UMKM Desa Tirtomulyo
             </h2>
+            <div class="w-24 h-1 bg-yellow-500 mx-auto rounded-full mb-4"></div>
             <p
-                class="text-xs sm:text-sm md:text-base text-gray-600 dark:text-gray-400 mt-2 leading-snug sm:leading-relaxed">
+                class="text-base text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed">
                 Temukan berbagai produk unggulan dari UMKM Desa, mulai dari makanan, minuman, hingga jasa.
+                Dukung ekonomi lokal dengan membeli produk asli desa.
             </p>
         </div>
 
 
         <!-- Filter + Pencarian -->
-        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
+        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-10 bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700">
             <!-- Kategori -->
             <div class="flex flex-wrap gap-2">
-                <template x-for="kat in ['semua','makanan','minuman','jasa','lainnya']" :key="kat">
-                    <button class="px-4 py-2 rounded-full border text-sm font-medium capitalize transition-colors"
+                <template x-for="kat in ['semua','Makanan & Minuman','Pertanian','Fesyen & Tekstil','Jasa','Lainnya']"
+                    :key="kat">
+                    <button class="px-5 py-2.5 rounded-full border text-sm font-medium capitalize transition-all duration-300"
                         :class="kategori === kat ?
                             'bg-yellow-400 text-white border-yellow-500' :
                             'bg-white dark:bg-gray-700 text-gray-600 dark:text-gray-200 border-gray-300 dark:border-gray-600'"
@@ -49,7 +50,7 @@
 
 
             <!-- Pencarian -->
-            <div class="relative w-full md:w-1/3">
+            <div class="relative w-full lg:w-1/3">
                 <input type="text" placeholder="Cari produk..." x-model="search"
                     class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 
                bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 
@@ -67,28 +68,44 @@
         </div>
 
         <!-- Grid Card -->
-        <div class="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-6">
+        <div class="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-6">
             <template
                 x-for="umkm in $store.umkms.filter(u => (kategori === 'semua' || u.kategori === kategori) 
                                                               && u.nama_produk.toLowerCase().includes(search.toLowerCase()))"
                 :key="umkm.id">
                 <div
-                    class="bg-white dark:bg-gray-700 rounded-2xl shadow-md p-4 transition hover:shadow-xl flex flex-col">
-                    <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100" x-text="umkm.nama_produk"></h3>
-                    <div class="flex items-center text-sm text-gray-600 dark:text-gray-400 mt-1">
-                        <i class="fas fa-user text-yellow-500 mr-2"></i>
-                        <span x-text="umkm.nama_pemilik"></span>
+                    class="group bg-white dark:bg-gray-800 rounded-2xl shadow-sm hover:shadow-xl border border-gray-100 dark:border-gray-700 transition-all duration-300 hover:-translate-y-1 flex flex-col overflow-hidden h-full">
+                    
+                    <!-- Gambar -->
+                    <div class="relative h-56 overflow-hidden">
+                        <img :src="umkm.primary_photo ? '/storage/' + umkm.primary_photo : 'https://via.placeholder.com/400x300?text=No+Image'"
+                            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            alt="Foto Produk">
+                        
+                        <!-- Badge Kategori -->
+                        <span class="absolute top-3 left-3 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm text-gray-800 dark:text-white text-xs font-bold px-3 py-1 rounded-full shadow-sm"
+                              x-text="umkm.kategori"></span>
                     </div>
-                    <div class="relative my-4" x-show="umkm.primary_photo">
-                        <img :src="'/storage/' + umkm.primary_photo"
-                            class="rounded-xl w-full object-cover h-48 cursor-pointer"
-                            @click="selectedUmkm = umkm; showImageModal=true;">
+
+                    <!-- Konten -->
+                    <div class="p-5 flex flex-col flex-grow">
+                        <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100 line-clamp-1 mb-1" x-text="umkm.nama_produk"></h3>
+                        
+                        <div class="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-3">
+                            <i class="fas fa-store text-yellow-500 mr-2"></i>
+                            <span class="truncate" x-text="umkm.nama_pemilik"></span>
+                        </div>
+
+                        <p class="text-sm text-gray-600 dark:text-gray-400 line-clamp-2 mb-4 flex-grow"
+                            x-text="umkm.deskripsi">
+                        </p>
+
+                        <button class="w-full bg-gray-50 dark:bg-gray-700 hover:bg-yellow-400 dark:hover:bg-yellow-500 text-gray-800 dark:text-gray-200 hover:text-white py-2.5 rounded-xl font-medium transition-colors duration-300 flex items-center justify-center gap-2 group-hover:bg-yellow-400 group-hover:text-white"
+                            @click="selectedUmkm = umkm; showDetailModal=true;">
+                            <span>Lihat Detail</span>
+                            <i class="fas fa-arrow-right text-xs transition-transform group-hover:translate-x-1"></i>
+                        </button>
                     </div>
-                    <p class="text-sm text-gray-600 dark:text-gray-400 flex-grow" x-text="umkm.deskripsi"></p>
-                    <button class="mt-4 w-full bg-yellow-400 text-white py-2 rounded-xl hover:bg-yellow-500 transition"
-                        @click="selectedUmkm = umkm; showDetailModal=true;">
-                        Lihat Detail
-                    </button>
                 </div>
             </template>
         </div>
@@ -99,128 +116,133 @@
 
     </div>
 
-    <!-- Modal Gambar -->
-    <div x-show="showImageModal" x-transition
-        class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50" @click="showImageModal=false"
-        style="display: none;">
-        <template x-for="(photo, index) in selectedUmkm.photos" :key="index">
-            <img x-show="index === 0" :src="'/storage/' + photo.photo"
-                class="max-w-full max-h-[90vh] rounded-lg shadow-lg">
-        </template>
-        <button @click="showImageModal=false"
-            class="absolute top-5 right-5 text-white text-4xl font-bold">&times;</button>
-    </div>
-
     <!-- Modal Detail -->
     <div x-show="showDetailModal" x-transition.opacity.scale.95
         class="fixed inset-0 z-50 flex items-center justify-center px-4" style="display: none;">
         <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" @click="showDetailModal=false"></div>
 
         <div
-            class="relative bg-white dark:bg-gray-800 rounded-2xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto transform transition-all p-6">
-            <div class="flex justify-between items-center border-b pb-3 mb-4">
-                <div>
-                    <!-- Nama Produk -->
-                    <h2 class="text-2xl font-bold dark:text-white"
-                        x-text="selectedUmkm ? selectedUmkm.nama_produk : ''"></h2>
+            class="relative bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-5xl w-full max-h-[90vh] overflow-y-auto transform transition-all"
+            x-data="{ currentImg: 0 }">
+            
+            <!-- Tombol Close -->
+            <button @click="showDetailModal=false"
+                class="absolute top-4 right-4 z-10 bg-white/50 dark:bg-black/50 hover:bg-red-500 hover:text-white text-gray-800 dark:text-white w-10 h-10 rounded-full flex items-center justify-center transition-colors backdrop-blur-md">
+                <i class="fas fa-times text-lg"></i>
+            </button>
 
-                    <!-- Nama Pemilik dengan Icon -->
-                    <div class="flex items-center text-sm text-gray-400 mt-1">
-                        <i class="fas fa-user mr-2 text-yellow-500"></i>
-                        <span x-text="selectedUmkm ? selectedUmkm.nama_pemilik : ''"></span>
+            <div class="flex flex-col md:flex-row h-full">
+                
+                <!-- Kolom Kiri: Galeri Foto -->
+                <div class="w-full md:w-1/2 bg-gray-100 dark:bg-gray-900 p-6 flex flex-col justify-center">
+                    <!-- Main Image -->
+                    <div class="relative aspect-[4/3] rounded-xl overflow-hidden shadow-lg mb-4 bg-white dark:bg-gray-800">
+                        <template x-if="selectedUmkm && selectedUmkm.photos && selectedUmkm.photos.length > 0">
+                            <img :src="'/storage/' + selectedUmkm.photos[currentImg].photo"
+                                class="w-full h-full object-contain"
+                                x-transition:enter="transition ease-out duration-300"
+                                x-transition:enter-start="opacity-0 scale-95"
+                                x-transition:enter-end="opacity-100 scale-100">
+                        </template>
+                        <template x-if="selectedUmkm && (!selectedUmkm.photos || selectedUmkm.photos.length === 0)">
+                             <img :src="selectedUmkm && selectedUmkm.primary_photo ? '/storage/' + selectedUmkm.primary_photo : 'https://via.placeholder.com/400x300?text=No+Image'"
+                                class="w-full h-full object-cover">
+                        </template>
+                    </div>
+
+                    <!-- Thumbnails -->
+                    <div class="flex gap-2 overflow-x-auto pb-2 scrollbar-hide justify-center" 
+                         x-show="selectedUmkm && selectedUmkm.photos && selectedUmkm.photos.length > 1">
+                        <template x-for="(img, index) in selectedUmkm ? selectedUmkm.photos : []" :key="index">
+                            <button @click="currentImg = index"
+                                class="w-16 h-16 rounded-lg overflow-hidden border-2 transition-all flex-shrink-0"
+                                :class="currentImg === index ? 'border-yellow-500 ring-2 ring-yellow-500/30' : 'border-transparent opacity-60 hover:opacity-100'">
+                                <img :src="'/storage/' + img.photo" class="w-full h-full object-cover">
+                            </button>
+                        </template>
                     </div>
                 </div>
 
-                <!-- Tombol Tutup -->
-                <button @click="showDetailModal=false"
-                    class="text-gray-500 hover:text-red-500 text-2xl transition">&times;</button>
-            </div>
-
-
-            <!-- Carousel Gambar -->
-            <div class="relative mb-6" x-data="{ currentImg: 0 }">
-                <h3 class="text-lg font-semibold mb-2 text-gray-700 dark:text-gray-200">Detail Foto</h3>
-                <template x-for="(img, index) in selectedUmkm.photos" :key="index">
-                    <img x-show="currentImg === index" :src="'/storage/' + img.photo"
-                        class="w-full h-90 object-containt rounded-xl shadow">
-                </template>
-                <button @click="currentImg = (currentImg - 1 + selectedUmkm.photos.length) % selectedUmkm.photos.length"
-                    class="absolute left-3 top-1/2 -translate-y-1/2 bg-black/50 text-white w-10 h-10 flex items-center justify-center rounded-full hover:bg-black/70 text-xl">
-                    &#10094;
-                </button>
-
-                <button @click="currentImg = (currentImg + 1) % selectedUmkm.photos.length"
-                    class="absolute right-3 top-1/2 -translate-y-1/2 bg-black/50 text-white w-10 h-10 flex items-center justify-center rounded-full hover:bg-black/70 text-xl">
-                    &#10095;
-                </button>
-
-            </div>
-            <h3 class="text-lg font-semibold mb-2 text-gray-700 dark:text-gray-200">Deskripsi</h3>
-            <p class="text-gray-600 dark:text-gray-300 mb-4 leading-relaxed"
-                x-text="selectedUmkm ? selectedUmkm.deskripsi : ''"></p>
-
-            <h3 class="text-lg font-semibold mb-2 text-gray-700 dark:text-gray-200">Lokasi : </h3>
-            <!-- Lokasi -->
-            <div class="mb-6 rounded-xl overflow-hidden shadow-md">
-                <div x-show="selectedUmkm" x-html="selectedUmkm.lokasi"></div>
-            </div>
-
-            <!-- Pesan / Link UMKM -->
-            <div class="text-center mt-8">
-                <h3 class="font-semibold text-lg mb-5 text-gray-800 dark:text-gray-200">Pesan melalui:</h3>
-                <div class="flex justify-center gap-6 flex-wrap">
-
-                    <!-- WhatsApp -->
-                    <div class="relative flex flex-col items-center group w-20">
-                        <a :href="selectedUmkm.link_wa ? 'https://wa.me/' + selectedUmkm.link_wa : '#'" target="_blank"
-                            class="w-16 h-16 flex items-center justify-center bg-green-500 text-white text-3xl rounded-full shadow-md transition relative overflow-hidden">
-                            <i class="fab fa-whatsapp"></i>
-                            <!-- Overlay muncul saat hover jika link tidak tersedia -->
-                            <div x-show="!selectedUmkm.link_wa"
-                                class="absolute inset-0 bg-black/30 flex items-center justify-center text-white text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity rounded-full pointer-events-none">
-                                Belum tersedia
+                <!-- Kolom Kanan: Informasi -->
+                <div class="w-full md:w-1/2 p-6 md:p-8 overflow-y-auto">
+                    
+                    <!-- Header Info -->
+                    <div class="mb-6">
+                        <span class="inline-block px-3 py-1 rounded-full bg-yellow-100 dark:bg-yellow-900 text-yellow-700 dark:text-yellow-300 text-xs font-bold uppercase tracking-wider mb-2"
+                              x-text="selectedUmkm ? selectedUmkm.kategori : ''"></span>
+                        
+                        <h2 class="text-3xl font-bold text-gray-800 dark:text-white mb-2"
+                            x-text="selectedUmkm ? selectedUmkm.nama_produk : ''"></h2>
+                        
+                        <div class="flex items-center text-gray-500 dark:text-gray-400">
+                            <div class="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center mr-3">
+                                <i class="fas fa-user text-sm"></i>
                             </div>
-                        </a>
-                        <span class="text-sm mt-2 text-gray-600 font-medium">WhatsApp</span>
+                            <div>
+                                <p class="text-xs text-gray-400 uppercase">Pemilik</p>
+                                <p class="font-medium text-sm" x-text="selectedUmkm ? selectedUmkm.nama_pemilik : ''"></p>
+                            </div>
+                        </div>
                     </div>
 
-                    <!-- Shopee -->
-                    <div class="relative flex flex-col items-center group w-20">
-                        <a :href="selectedUmkm.link_shopee ? selectedUmkm.link_shopee : '#'" target="_blank"
-                            class="w-16 h-16 flex items-center justify-center bg-orange-500 text-white text-3xl rounded-full shadow-md transition relative overflow-hidden">
-                            <i class="fas fa-shopping-bag"></i>
-                            <div x-show="!selectedUmkm.link_shopee"
-                                class="absolute inset-0 bg-black/30 flex items-center justify-center text-white text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity rounded-full pointer-events-none">
-                                Belum tersedia
-                            </div>
-                        </a>
-                        <span class="text-sm mt-2 text-gray-600 font-medium">Shopee</span>
+                    <!-- Deskripsi -->
+                    <div class="mb-8">
+                        <h3 class="text-sm font-bold text-gray-900 dark:text-gray-100 uppercase tracking-wide mb-2">Deskripsi Produk</h3>
+                        <p class="text-gray-600 dark:text-gray-300 leading-relaxed text-sm text-justify"
+                           x-text="selectedUmkm ? selectedUmkm.deskripsi : ''"></p>
                     </div>
 
-                    <!-- Tokopedia -->
-                    <div class="relative flex flex-col items-center group w-20">
-                        <a :href="selectedUmkm.link_tokopedia ? selectedUmkm.link_tokopedia : '#'" target="_blank"
-                            class="w-16 h-16 flex items-center justify-center bg-green-700 text-white text-3xl rounded-full shadow-md transition relative overflow-hidden">
-                            <i class="fas fa-store"></i>
-                            <div x-show="!selectedUmkm.link_tokopedia"
-                                class="absolute inset-0 bg-black/30 flex items-center justify-center text-white text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity rounded-full pointer-events-none">
-                                Belum tersedia
-                            </div>
-                        </a>
-                        <span class="text-sm mt-2 text-gray-600 font-medium">Tokopedia</span>
+                    <!-- Tombol Aksi (Marketplace) -->
+                    <div class="mb-8">
+                        <h3 class="text-sm font-bold text-gray-900 dark:text-gray-100 uppercase tracking-wide mb-3">Pesan Sekarang</h3>
+                        <div class="grid grid-cols-2 gap-3">
+                            
+                            <!-- WhatsApp -->
+                            <a x-show="selectedUmkm && selectedUmkm.link_wa" 
+                               :href="'https://wa.me/' + selectedUmkm.link_wa" target="_blank"
+                               class="flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white py-3 px-4 rounded-xl transition shadow-md hover:shadow-lg">
+                                <i class="fab fa-whatsapp text-xl"></i>
+                                <span class="font-medium">WhatsApp</span>
+                            </a>
+
+                            <!-- Shopee -->
+                            <a x-show="selectedUmkm && selectedUmkm.link_shopee" 
+                               :href="selectedUmkm.link_shopee" target="_blank"
+                               class="flex items-center justify-center gap-2 bg-orange-500 hover:bg-orange-600 text-white py-3 px-4 rounded-xl transition shadow-md hover:shadow-lg">
+                                <i class="fas fa-shopping-bag text-xl"></i>
+                                <span class="font-medium">Shopee</span>
+                            </a>
+
+                            <!-- Tokopedia -->
+                            <a x-show="selectedUmkm && selectedUmkm.link_tokopedia" 
+                               :href="selectedUmkm.link_tokopedia" target="_blank"
+                               class="flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white py-3 px-4 rounded-xl transition shadow-md hover:shadow-lg">
+                                <i class="fas fa-store text-xl"></i>
+                                <span class="font-medium">Tokopedia</span>
+                            </a>
+
+                            <!-- TikTok -->
+                            <a x-show="selectedUmkm && selectedUmkm.link_tiktok" 
+                               :href="selectedUmkm.link_tiktok" target="_blank"
+                               class="flex items-center justify-center gap-2 bg-black hover:bg-gray-800 text-white py-3 px-4 rounded-xl transition shadow-md hover:shadow-lg">
+                                <i class="fab fa-tiktok text-xl"></i>
+                                <span class="font-medium">TikTok</span>
+                            </a>
+                        </div>
+                        
+                        <!-- Fallback jika tidak ada link -->
+                        <div x-show="selectedUmkm && !selectedUmkm.link_wa && !selectedUmkm.link_shopee && !selectedUmkm.link_tokopedia && !selectedUmkm.link_tiktok"
+                             class="text-center py-4 bg-gray-50 dark:bg-gray-700 rounded-xl text-gray-500 text-sm italic">
+                            Belum ada link pembelian online tersedia.
+                        </div>
                     </div>
 
-                    <!-- TikTok -->
-                    <div class="relative flex flex-col items-center group w-20">
-                        <a :href="selectedUmkm.link_tiktok ? selectedUmkm.link_tiktok : '#'" target="_blank"
-                            class="w-16 h-16 flex items-center justify-center bg-black text-white text-3xl rounded-full shadow-md transition relative overflow-hidden">
-                            <i class="fab fa-tiktok"></i>
-                            <div x-show="!selectedUmkm.link_tiktok"
-                                class="absolute inset-0 bg-black/30 flex items-center justify-center text-white text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity rounded-full pointer-events-none">
-                                Belum tersedia
-                            </div>
-                        </a>
-                        <span class="text-sm mt-2 text-gray-600 font-medium">TikTok</span>
+                    <!-- Lokasi -->
+                    <div x-show="selectedUmkm && selectedUmkm.lokasi">
+                        <h3 class="text-sm font-bold text-gray-900 dark:text-gray-100 uppercase tracking-wide mb-3">Lokasi</h3>
+                        <div class="rounded-xl overflow-hidden shadow-sm border border-gray-200 dark:border-gray-700 aspect-video w-full">
+                            <div class="w-full h-full [&>iframe]:w-full [&>iframe]:h-full" x-html="selectedUmkm.lokasi"></div>
+                        </div>
                     </div>
 
                 </div>

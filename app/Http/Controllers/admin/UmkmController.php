@@ -11,9 +11,10 @@ class UmkmController extends Controller
 {
     public function index()
     {
-        $umkms = Umkm::with('photos')->latest()->get();
+        $umkms = Umkm::with('photos')->latest()->paginate(6);
         return view('admin.umkm', compact('umkms'));
     }
+
 
     public function store(Request $request)
     {

@@ -30,7 +30,7 @@ class PasswordController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-      return redirect()->route('admin.dashboard.index')->with('success', 'Password berhasil di ubah.');
+      return redirect()->route('admin.umkm')->with('success', 'Password berhasil di ubah.');
 
     }
 }

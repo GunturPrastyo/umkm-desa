@@ -1,8 +1,11 @@
 <!-- Gallery Section -->
-<div class="py-10 bg-gradient-to-l from-yellow-0 to-yellow-50  dark:from-gray-700 dark:to-gray-900" id="gallery" style="font-family: 'Poppins', sans-serif;">
-  
+<div class="py-10 bg-gradient-to-l from-gray-50 to-gray-100 
+           dark:from-gray-800 dark:to-gray-900"
+    id="gallery" style="font-family: 'Poppins', sans-serif;">
 
-    <div class="container mx-auto md:px-6 max-w-7xl">
+
+    <div class="bg-gradient-to-l from-gray-50 to-gray-200 rounded-xl
+               dark:from-gray-800 dark:to-gray-900 container mx-auto md:px-6 max-w-7xl">
         <!-- Heading -->
         <div class="text-center mb-8 animate__animated animate__fadeInUp animate__delay-1s">
             <h2 class="text-3xl font-semibold tracking-tight text-gray-800 dark:text-white">

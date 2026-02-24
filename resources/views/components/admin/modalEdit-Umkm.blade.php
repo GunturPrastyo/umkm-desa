@@ -42,7 +42,7 @@
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5"
                             required>
                             @php
-                                $categories = ['makanan', 'minuman', 'jasa', 'lainnya'];
+                                $categories = ['Makanan & Minuman', 'Pertanian','Fesyen & Tekstil', 'Jasa', 'Lainnya'];
                             @endphp
                             @foreach ($categories as $category)
                                 <option value="{{ $category }}"

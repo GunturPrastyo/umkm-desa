@@ -142,26 +142,25 @@
             class="hidden lg:flex items-center justify-between space-x-6 w-full lg:w-auto lg:order-2">
 
             <!-- Website Resmi Desa -->
-            <a href="https://tirtomulyo.desa.id" target="_blank"
+            <a href="{{ $sosmed->website ?? '#' }}" target="_blank"
                 class="text-gray-600 dark:text-white hover:text-green-600 dark:hover:text-green-400">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 md:h-5 md:w-5" fill="currentColor"
                     viewBox="0 0 24 24">
                     <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10
-               10-4.486 10-10S17.514 2 12 2zm6.931 6h-2.051a15.82 15.82 0 0 0-1.713-3.725A8.032 8.032 0 0 1 18.931 8zM12 4c1.563
-               0 3.002 1.79 3.797 4H8.203C9 5.79 10.437 4 12 4zM4.691
-               14a7.936 7.936 0 0 1 0-4h2.186a17.27 17.27 0 0 0 0 4H4.691zM5.069
-               16h2.051a15.82 15.82 0 0 0 1.713 3.725A8.032 8.032 0 0 1 5.069 16zM12
-               20c-1.563 0-3.002-1.79-3.797-4h7.594C15.002 18.21 13.563 20 12
-               20zm2.134-.275A15.82 15.82 0 0 0 16.88 16h2.051a8.032 8.032 0 0 1-4.797
-               3.725zM17.123 14h-2.246a17.27 17.27 0 0 0 0-4h2.246a15.27 15.27 0 0 1 0
-               4zM9.123 14a17.27 17.27 0 0 1 0-4h5.754a17.27 17.27 0 0 1 0 4H9.123z" />
+           10-4.486 10-10S17.514 2 12 2zm6.931 6h-2.051a15.82 15.82 0 0 0-1.713-3.725A8.032 8.032 0 0 1 18.931 8zM12 4c1.563
+           0 3.002 1.79 3.797 4H8.203C9 5.79 10.437 4 12 4zM4.691
+           14a7.936 7.936 0 0 1 0-4h2.186a17.27 17.27 0 0 0 0 4H4.691zM5.069
+           16h2.051a15.82 15.82 0 0 0 1.713 3.725A8.032 8.032 0 0 1 5.069 16zM12
+           20c-1.563 0-3.002-1.79-3.797-4h7.594C15.002 18.21 13.563 20 12
+           20zm2.134-.275A15.82 15.82 0 0 0 16.88 16h2.051a8.032 8.032 0 0 1-4.797
+           3.725zM17.123 14h-2.246a17.27 17.27 0 0 0 0-4h2.246a15.27 15.27 0 0 1 0
+           4zM9.123 14a17.27 17.27 0 0 1 0-4h5.754a17.27 17.27 0 0 1 0 4H9.123z" />
                 </svg>
             </a>
 
-
             <!-- Facebook -->
-            <a href="https://www.facebook.com/profile.php?id=100016203455008" target="_blank"
-                class="text-gray-600 dark:text-white hover:text-blue-600 dark:hover:text-blue-400">
+            <a href="{{ $sosmed->facebook ?? '#' }}"
+                target="_blank" class="text-gray-600 dark:text-white hover:text-blue-600 dark:hover:text-blue-400">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 md:h-5 md:w-5" fill="currentColor"
                     viewBox="0 0 24 24">
                     <path
@@ -170,7 +169,7 @@
             </a>
 
             <!-- Twitter -->
-            <a href="https://x.com/DPerdaganganSMG" target="_blank"
+            <a href="{{ $sosmed->twitter ?? '#' }}" target="_blank"
                 class="text-gray-600 dark:text-white hover:text-gray-900 dark:hover:text-gray-400">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 md:h-5 md:w-5" fill="currentColor"
                     viewBox="0 0 24 24">
@@ -180,19 +179,18 @@
             </a>
 
             <!-- Instagram -->
-            <a href="https://www.instagram.com/dinasperdagangansemarang?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+            <a href="{{ $sosmed->instagram ?? '#' }}"
                 target="_blank" class="text-gray-600 dark:text-white hover:text-pink-500 dark:hover:text-pink-400">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 md:h-5 md:w-5" fill="currentColor"
                     viewBox="0 0 24 24">
                     <path
                         d="M12 2.16c3.2 0 3.584.012 4.85.07 1.17.056 1.97.25 2.43.42a4.92 4.92 0 011.78 1.16 4.92 4.92 0 011.16 1.78c.17.46.364 1.26.42 2.43.058 1.266.07 1.65.07 4.85s-.012 3.584-.07 4.85c-.056 1.17-.25 1.97-.42 2.43a4.92 4.92 0 01-1.16 1.78 4.92 4.92 0 01-1.78 1.16c-.46.17-1.26.364-2.43.42-1.266.058-1.65.07-4.85.07s-3.584-.012-4.85-.07c-1.17-.056-1.97-.25-2.43-.42a4.92 4.92 0 01-1.78-1.16 4.92 4.92 0 01-1.16-1.78c-.17-.46-.364-1.26-.42-2.43C2.172 15.584 2.16 15.2 2.16 12s.012-3.584.07-4.85c.056-1.17.25-1.97.42-2.43a4.92 4.92 0 011.16-1.78 4.92 4.92 0 011.78-1.16c.46-.17 1.26-.364 2.43-.42C8.416 2.172 8.8 2.16 12 2.16zm0 1.68c-3.15 0-3.52.012-4.76.068-.98.045-1.51.208-1.86.35-.47.18-.8.39-1.15.74a3.25 3.25 0 00-.74 1.15c-.14.35-.3.88-.35 1.86-.056 1.24-.068 1.61-.068 4.76s.012 3.52.068 4.76c.045.98.208 1.51.35 1.86.18.47.39.8.74 1.15.35.35.68.56 1.15.74.35.14.88.3 1.86.35 1.24.056 1.61.068 4.76.068s3.52-.012 4.76-.068c.98-.045 1.51-.208 1.86-.35.47-.18.8-.39 1.15-.74.35-.35.56-.68.74-1.15.14-.35.3-.88.35-1.86.056-1.24.068-1.61.068-4.76s-.012-3.52-.068-4.76c-.045-.98-.208-1.51-.35-1.86a3.25 3.25 0 00-.74-1.15 3.25 3.25 0 00-1.15-.74c-.35-.14-.88-.3-1.86-.35-1.24-.056-1.61-.068-4.76-.068zm0 3.96a5.88 5.88 0 110 11.76 5.88 5.88 0 010-11.76zm0 1.68a4.2 4.2 0 100 8.4 4.2 4.2 0 000-8.4zm6.4-.84a1.4 1.4 0 110 2.8 1.4 1.4 0 010-2.8z" />
                 </svg>
-
             </a>
 
             <!-- YouTube -->
-            <a href="https://www.youtube.com/channel/UCkcsdNFBpMv-bOuVm14pK2g" target="_blank"
-                class="text-gray-600 dark:text-white hover:text-red-600 dark:hover:text-red-500">
+            <a href="{{ $sosmed->youtube ?? '#' }}"
+                target="_blank" class="text-gray-600 dark:text-white hover:text-red-600 dark:hover:text-red-500">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 md:h-5 md:w-5" fill="currentColor"
                     viewBox="0 0 24 24">
                     <path
@@ -201,6 +199,7 @@
             </a>
 
         </div>
+
 
     </div>
 </nav>

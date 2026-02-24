@@ -66,7 +66,7 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::get('/change-password', [PasswordController::class, 'edit'])->name('password.edit');
     Route::put('/change-password', [PasswordController::class, 'update'])->name('password.update');
     // Dashboard admin
-    Route::resource('dashboard', DashboardController::class)->except(['show']);
+    // Route::resource('dashboard', DashboardController::class)->except(['show']);
 
     // Resource lain di admin
     Route::resource('umkms', UmkmController::class)->except(['show']);

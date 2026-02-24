@@ -42,7 +42,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('admin.dashboard.index', absolute: false));
+        return redirect()->intended(route('admin.umkms.index', absolute: false));
     }
 
 
