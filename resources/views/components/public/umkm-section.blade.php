@@ -21,99 +21,99 @@
     <div
         class="max-w-7xl mx-auto">
 
-        <!-- Kata Pembuka -->
-        <div class="text-center mb-12 dark:text-white px-4">
-            <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 dark:text-gray-100 mb-4">
-                UMKM Desa Tirtomulyo
-            </h2>
-            <div class="w-24 h-1 bg-yellow-500 mx-auto rounded-full mb-4"></div>
-            <p
-                class="text-base text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed">
-                Temukan berbagai produk unggulan dari UMKM Desa, mulai dari makanan, minuman, hingga jasa.
-                Dukung ekonomi lokal dengan membeli produk asli desa.
-            </p>
-        </div>
+        <!-- Main Card Container -->
+        <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-sm p-6 md:p-12 border border-gray-100 dark:border-gray-700">
+            <!-- Kata Pembuka -->
+            <div class="text-center mb-12 dark:text-white px-4">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 dark:text-gray-100 mb-4">
+                    UMKM Desa Tirtomulyo
+                </h2>
+                <div class="w-24 h-1 bg-yellow-500 mx-auto rounded-full mb-4"></div>
+                <p
+                    class="text-base text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed">
+                    Temukan berbagai produk unggulan dari UMKM Desa, mulai dari makanan, minuman, hingga jasa.
+                    Dukung ekonomi lokal dengan membeli produk asli desa.
+                </p>
+            </div>
 
+            <!-- Filter + Pencarian -->
+            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-10">
+                <!-- Kategori -->
+                <div class="flex flex-wrap gap-2 justify-center lg:justify-start">
+                    <template x-for="kat in ['semua','Makanan & Minuman','Pertanian','Fesyen & Tekstil','Jasa','Lainnya']"
+                        :key="kat">
+                        <button class="px-5 py-2.5 rounded-full border text-sm font-medium capitalize transition-all duration-300"
+                            :class="kategori === kat ?
+                                'bg-yellow-400 text-white border-yellow-500' :
+                                'bg-gray-50 dark:bg-gray-700 text-gray-600 dark:text-gray-200 border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600'"
+                            @click="kategori = kat" x-text="kat">
+                        </button>
+                    </template>
+                </div>
 
-        <!-- Filter + Pencarian -->
-        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-10 bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700">
-            <!-- Kategori -->
-            <div class="flex flex-wrap gap-2">
-                <template x-for="kat in ['semua','Makanan & Minuman','Pertanian','Fesyen & Tekstil','Jasa','Lainnya']"
-                    :key="kat">
-                    <button class="px-5 py-2.5 rounded-full border text-sm font-medium capitalize transition-all duration-300"
-                        :class="kategori === kat ?
-                            'bg-yellow-400 text-white border-yellow-500' :
-                            'bg-white dark:bg-gray-700 text-gray-600 dark:text-gray-200 border-gray-300 dark:border-gray-600'"
-                        @click="kategori = kat" x-text="kat">
-                    </button>
+                <!-- Pencarian -->
+                <div class="relative w-full lg:w-1/3">
+                    <input type="text" placeholder="Cari produk..." x-model="search"
+                        class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 
+                   bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 
+                   placeholder-gray-400 dark:placeholder-gray-300 
+                   focus:ring-2 focus:ring-yellow-400 focus:outline-none transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                        class="h-5 w-5 absolute left-3 top-2.5 
+                   text-gray-400 dark:text-gray-300"
+                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1010.5 18a7.5 7.5 0 006.15-3.35z" />
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Grid Card -->
+            <div class="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-6">
+                <template
+                    x-for="umkm in $store.umkms.filter(u => (kategori === 'semua' || u.kategori === kategori) 
+                                                                  && u.nama_produk.toLowerCase().includes(search.toLowerCase()))"
+                    :key="umkm.id">
+                    <div
+                        class="group bg-gray-50 dark:bg-gray-700 rounded-2xl shadow-sm hover:shadow-xl border border-gray-200 dark:border-gray-600 transition-all duration-300 hover:-translate-y-1 flex flex-col overflow-hidden h-full">
+                        
+                        <!-- Gambar -->
+                        <div class="relative h-56 overflow-hidden">
+                            <img :src="umkm.primary_photo ? '/storage/' + umkm.primary_photo : 'https://via.placeholder.com/400x300?text=No+Image'"
+                                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                alt="Foto Produk">
+                            
+                            <!-- Badge Kategori -->
+                            <span class="absolute top-3 left-3 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm text-gray-800 dark:text-white text-xs font-bold px-3 py-1 rounded-full shadow-sm"
+                                  x-text="umkm.kategori"></span>
+                        </div>
+
+                        <!-- Konten -->
+                        <div class="p-5 flex flex-col flex-grow">
+                            <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100 line-clamp-1 mb-1" x-text="umkm.nama_produk"></h3>
+                            
+                            <div class="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-3">
+                                <i class="fas fa-store text-yellow-500 mr-2"></i>
+                                <span class="truncate" x-text="umkm.nama_pemilik"></span>
+                            </div>
+
+                            <p class="text-sm text-gray-600 dark:text-gray-400 line-clamp-2 mb-4 flex-grow"
+                                x-text="umkm.deskripsi">
+                            </p>
+
+                            <button class="w-full bg-white dark:bg-gray-800 hover:bg-yellow-400 dark:hover:bg-yellow-500 text-gray-800 dark:text-gray-200 hover:text-white py-2.5 rounded-xl font-medium transition-colors duration-300 flex items-center justify-center gap-2 group-hover:bg-yellow-400 group-hover:text-white shadow-sm"
+                                @click="selectedUmkm = umkm; showDetailModal=true;">
+                                <span>Lihat Detail</span>
+                                <i class="fas fa-arrow-right text-xs transition-transform group-hover:translate-x-1"></i>
+                            </button>
+                        </div>
+                    </div>
                 </template>
             </div>
 
-
-            <!-- Pencarian -->
-            <div class="relative w-full lg:w-1/3">
-                <input type="text" placeholder="Cari produk..." x-model="search"
-                    class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 
-               bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 
-               placeholder-gray-400 dark:placeholder-gray-300 
-               focus:ring-2 focus:ring-yellow-400 focus:outline-none transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg"
-                    class="h-5 w-5 absolute left-3 top-2.5 
-               text-gray-400 dark:text-gray-300"
-                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1010.5 18a7.5 7.5 0 006.15-3.35z" />
-                </svg>
+            <div class="mt-8">
+                {{ $umkms->links() }}
             </div>
-
-        </div>
-
-        <!-- Grid Card -->
-        <div class="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-6">
-            <template
-                x-for="umkm in $store.umkms.filter(u => (kategori === 'semua' || u.kategori === kategori) 
-                                                              && u.nama_produk.toLowerCase().includes(search.toLowerCase()))"
-                :key="umkm.id">
-                <div
-                    class="group bg-white dark:bg-gray-800 rounded-2xl shadow-sm hover:shadow-xl border border-gray-100 dark:border-gray-700 transition-all duration-300 hover:-translate-y-1 flex flex-col overflow-hidden h-full">
-                    
-                    <!-- Gambar -->
-                    <div class="relative h-56 overflow-hidden">
-                        <img :src="umkm.primary_photo ? '/storage/' + umkm.primary_photo : 'https://via.placeholder.com/400x300?text=No+Image'"
-                            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                            alt="Foto Produk">
-                        
-                        <!-- Badge Kategori -->
-                        <span class="absolute top-3 left-3 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm text-gray-800 dark:text-white text-xs font-bold px-3 py-1 rounded-full shadow-sm"
-                              x-text="umkm.kategori"></span>
-                    </div>
-
-                    <!-- Konten -->
-                    <div class="p-5 flex flex-col flex-grow">
-                        <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100 line-clamp-1 mb-1" x-text="umkm.nama_produk"></h3>
-                        
-                        <div class="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-3">
-                            <i class="fas fa-store text-yellow-500 mr-2"></i>
-                            <span class="truncate" x-text="umkm.nama_pemilik"></span>
-                        </div>
-
-                        <p class="text-sm text-gray-600 dark:text-gray-400 line-clamp-2 mb-4 flex-grow"
-                            x-text="umkm.deskripsi">
-                        </p>
-
-                        <button class="w-full bg-gray-50 dark:bg-gray-700 hover:bg-yellow-400 dark:hover:bg-yellow-500 text-gray-800 dark:text-gray-200 hover:text-white py-2.5 rounded-xl font-medium transition-colors duration-300 flex items-center justify-center gap-2 group-hover:bg-yellow-400 group-hover:text-white"
-                            @click="selectedUmkm = umkm; showDetailModal=true;">
-                            <span>Lihat Detail</span>
-                            <i class="fas fa-arrow-right text-xs transition-transform group-hover:translate-x-1"></i>
-                        </button>
-                    </div>
-                </div>
-            </template>
-        </div>
-
-        <div class="mt-4">
-            {{ $umkms->links() }}
         </div>
 
     </div>
